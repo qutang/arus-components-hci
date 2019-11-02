@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "arus-components-hci"
+version = "0.1.0"
+description = "arus plugins that include streams, pipelines and broadcasters that may include human computer interactions through GUI, voice or other interfaces."
+authors = ["qutang <tqshelly@gmail.com>"]
+license = "GPL-3.0"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+arus = "^0.4.6"
+pysimplegui = "^4.4"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+python-semantic-release = "^4.3"
+pdoc3 = "^0.7.1"
+autopep8 = "^1.4"
+pylint = "^2.4"
+[tool.semantic_release]
+version_variable = "pyproject.toml:version"
+version_source = "commit"
+upload_to_pypi="false"
+patch_without_tag='true'
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
