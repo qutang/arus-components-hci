@@ -1,0 +1,52 @@
+name: Continuous integration
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@master
+      # with:
+      #   submodules: true
+
+    - name: Setup python version
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.7.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
+        architecture: 'x64' # (x64 or x86)
+
+    - name: Setup python dev environment
+      run: |
+        pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Bump version and tagging and publish
+      run: |
+        git config --global user.email "tqshelly@gmail.com"
+        git config --global user.name "github actions"
+        git pull origin master
+        poetry run semantic-release publish
+      env:
+        GH_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+
+    - name: Build pypi package
+      run: poetry build
+
+    - name: Deploy to pypi
+      run: poetry run twine upload dist/* --skip-existing -u ${{ secrets.PYPI_USERNAME }} -p ${{ secrets.PYPI_PASSWORD }}
+
+    - name: Build website
+      run: poetry run python doc.py
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v2.5.0
+      env:
+        PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./docs
