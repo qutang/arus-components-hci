@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "arus-components-hci"
-version = "0.1.1"
+version = "0.1.2"
 description = "arus plugins that include streams, pipelines and broadcasters that may include human computer interactions through GUI, voice or other interfaces."
 authors = ["qutang <tqshelly@gmail.com>"]
 license = "GPL-3.0"
