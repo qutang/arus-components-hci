@@ -36,16 +36,15 @@ jobs:
       run: | 
         sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt update
-        sudo apt install python3.7
-        sudo apt install python3.7-dev
         sudo apt install python3-tk
-        alias python='python3'
         python -V
+        alias python=python3
+        python3 -V
 
     - name: Setup python dev environment
       run: |
-        pip install --upgrade pip
-        pip install poetry
+        pip3 install --upgrade pip
+        pip3 install poetry
         poetry install
 
     - name: Test building
