@@ -34,14 +34,16 @@ jobs:
 
     - name: Setup system requirement
       run: | 
-        sudo add-apt-repository ppa:deadsnakes/ppa
+        # sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt update
+        sudo apt install python3.7
+        sudo apt install python3.7-dev
         sudo apt install python3-tk
+        alias python='python3'
+        python -V
 
     - name: Setup python dev environment
       run: |
-        alias python=python3
-        python -V
         pip install --upgrade pip
         pip install poetry
         poetry install
