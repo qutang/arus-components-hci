@@ -31,6 +31,9 @@ jobs:
         python-version: '3.7.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
         architecture: 'x64' # (x64 or x86)
 
+    - name: Setup system requirement
+      run: sudo apt install tk-dev
+
     - name: Setup python dev environment
       run: |
         pip install --upgrade pip
@@ -39,3 +42,6 @@ jobs:
 
     - name: Test building
       run: poetry build
+
+    - name: Test building website
+      run: poetry run python doc.py
