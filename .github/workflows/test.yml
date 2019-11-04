@@ -26,11 +26,11 @@ jobs:
       # with:
       #   submodules: true
 
-    - name: Setup python version
-      uses: actions/setup-python@v1
-      with:
-        python-version: '3.6.8' # Version range or exact version of a Python version to use, using semvers version range syntax.
-        architecture: 'x64' # (x64 or x86)
+    # - name: Setup python version
+    #   uses: actions/setup-python@v1
+    #   with:
+    #     python-version: '3.6.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
+    #     architecture: 'x64' # (x64 or x86)
 
     - name: Setup system requirement
       run: | 
@@ -40,6 +40,8 @@ jobs:
 
     - name: Setup python dev environment
       run: |
+        alias python=python3
+        python -V
         pip install --upgrade pip
         pip install poetry
         poetry install
