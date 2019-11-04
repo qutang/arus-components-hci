@@ -13,6 +13,7 @@ on:
     - "docs/**"
     - "refactor/**"
     - "test/**"
+    - "ci/**"
     - "!master"
 
 
@@ -31,11 +32,25 @@ jobs:
         python-version: '3.7.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
         architecture: 'x64' # (x64 or x86)
 
+    - name: Setup system requirement
+      run: | 
+        sudo apt update
+        sudo apt install python3-tk
+
+    - name: configure tkinter for current python environment
+      run: |
+        ls /opt/hostedtoolcache/Python/3.7.5/x64/lib/python3.7/lib-dynload/
+        ln -s /usr/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so /opt/hostedtoolcache/Python/3.7.5/x64/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so
+
     - name: Setup python dev environment
       run: |
         pip install --upgrade pip
         pip install poetry
+        poetry config settings.virtualenvs.in-project true
         poetry install
 
     - name: Test building
       run: poetry build
+
+    - name: Test building website
+      run: poetry run python doc.py
