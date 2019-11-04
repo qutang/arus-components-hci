@@ -26,27 +26,28 @@ jobs:
       # with:
       #   submodules: true
 
-    # - name: Setup python version
-    #   uses: actions/setup-python@v1
-    #   with:
-    #     python-version: '3.6.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
-    #     architecture: 'x64' # (x64 or x86)
+    - name: Setup python version
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.6.x' # Version range or exact version of a Python version to use, using semvers version range syntax.
+        architecture: 'x64' # (x64 or x86)
 
     - name: Setup system requirement
       run: | 
-        sudo add-apt-repository ppa:deadsnakes/ppa
         sudo apt update
         sudo apt install python3-tk
-        echo "alias python=python3" >> ~/.bashrc
-        echo "alias pip=pip3" >> ~/.bashrc
-        source ~/.bashrc
-        python -V
 
     - name: Setup python dev environment
       run: |
         pip install --upgrade pip
         pip install poetry
+        poetry config settings.virtualenvs.in-project true
         poetry install
+
+    - name: configure tkinter for current python environment
+      run: |
+        ln -s /usr/lib/python3.7/tkinter ./.venv/lib/python3.7/tkinter
+        ln -s /usr/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so ./.venv/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so
 
     - name: Test building
       run: poetry build
