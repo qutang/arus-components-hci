@@ -46,8 +46,8 @@ jobs:
 
     - name: configure tkinter for current python environment
       run: |
-        ln -s /usr/lib/python3.7/tkinter ./.venv/lib/python3.7/tkinter
-        ln -s /usr/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so ./.venv/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so
+        ls /opt/hostedtoolcache/Python/3.7.5/x64/lib/python3.7/lib-dynload/
+        ln -s /usr/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so /opt/hostedtoolcache/Python/3.7.5/x64/lib/python3.7/lib-dynload/_tkinter.cpython-37m-x86_64-linux-gnu.so
 
     - name: Test building
       run: poetry build
